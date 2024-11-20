@@ -36,3 +36,5 @@ function destroy(req, res) {
   const slug = req.params.slug;
   res.send(`Elimina il post con slug ${slug}`);
 }
+
+module.exports = { index, show, store, modify, update, destroy };
