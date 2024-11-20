@@ -47,6 +47,14 @@ function update(req, res) {
 //destroy
 function destroy(req, res) {
   const slug = req.params.slug;
+
+  const postIndex = posts.findIndex((posts) => posts.slug === slug);
+
+  posts.splice(postIndex, 1);
+
+  console.log(posts);
+  console.log(`Elimina il post con slug ${slug}`);
+  res.sendStatus(204);
 }
 
 module.exports = { index, show, store, modify, update, destroy };
