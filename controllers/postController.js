@@ -4,8 +4,19 @@ const posts = require("../data/posts.js");
 
 //index
 function index(req, res) {
-  console.log("Ecco la lista dei post");
-  res.json(posts);
+  //   const tag = req.query.tags;
+  let taggedPosts = posts;
+
+  if (req.query.tags) {
+    console.log(`Ecco la lista dei post con il tag: ${req.query.tags}`);
+    const taggedPosts = posts.filter((post) => {
+      post.tags.includes(req.query.tags);
+    });
+    console.log(taggedPosts);
+    return res.json(taggedPosts);
+  }
+
+  res.json(taggedPosts);
 }
 
 //show
@@ -49,6 +60,17 @@ function destroy(req, res) {
   const slug = req.params.slug;
 
   const postIndex = posts.findIndex((posts) => posts.slug === slug);
+
+  if (postIndex === -1) {
+    res.status(404);
+    result = {
+      error: "Post not found",
+      message: "Il post non è stato trovato",
+    };
+    res.send(result);
+
+    return;
+  }
 
   posts.splice(postIndex, 1);
 
