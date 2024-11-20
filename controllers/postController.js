@@ -1,3 +1,5 @@
+const posts = require("../data/posts.js");
+
 // Functions
 
 //index
@@ -9,9 +11,20 @@ function index(req, res) {
 //show
 function show(req, res) {
   const slug = req.params.slug;
+  let result = posts;
+
   console.log(`Ecco il post con slug ${slug}`);
-  const post = posts.find((p) => p.slug === slug);
-  res.json(post);
+  result = posts.find((p) => p.slug === slug);
+
+  if (!posts) {
+    res.status(404);
+    result = {
+      error: "Post not found",
+      message: "Il post non è stato trovato",
+    };
+  }
+
+  res.json(result);
 }
 
 //store
@@ -34,7 +47,6 @@ function update(req, res) {
 //destroy
 function destroy(req, res) {
   const slug = req.params.slug;
-  res.send(`Elimina il post con slug ${slug}`);
 }
 
 module.exports = { index, show, store, modify, update, destroy };
