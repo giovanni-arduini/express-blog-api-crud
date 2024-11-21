@@ -6,6 +6,7 @@ const posts = require("../data/posts.js");
 function index(req, res) {
   const tag = req.query.tags;
   let taggedPosts = posts;
+  console.log(tag);
 
   if (tag) {
     console.log(`Ecco la lista dei post con il tag: ${tag}`);
@@ -21,15 +22,17 @@ function index(req, res) {
 //show
 function show(req, res) {
   const identifier = req.params.identifier;
+  console.log(identifier);
   let result;
 
   console.log(`Ecco il post con identificativo ${identifier}`);
 
   if (!isNaN(identifier)) {
-    identifier = parseInt(identifier);
-    result = posts.find((post) => post.id === identifier);
+    let postIndex;
+    postIndex = parseInt(identifier);
+    result = posts.find((post) => post.id === postIndex);
   } else {
-    result = posts.find((post) => post.slug === identifier);
+    result = posts.filter((post) => post.tags.includes(identifier));
   }
 
   if (!result) {

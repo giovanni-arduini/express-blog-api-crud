@@ -7,7 +7,7 @@ const postController = require("../controllers/postController.js");
 router.get("/", postController.index);
 
 //show
-router.get("/:id", postController.show);
+router.get("/:identifier", postController.show);
 
 //store
 router.post("/", postController.store);
