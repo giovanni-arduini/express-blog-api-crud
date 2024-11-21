@@ -45,15 +45,16 @@ function show(req, res) {
 
 //store
 function store(req, res) {
-  const newId = posts[posts.lenght - 1].id + 1;
+  const newId = posts[posts.length - 1].id + 1;
+  console.log(newId);
 
   const newPost = {
     id: newId,
-    title,
-    slug,
-    content,
-    image,
-    tags,
+    title: req.body.title,
+    slug: req.body.slug,
+    content: req.body.content,
+    image: req.body.image,
+    tags: req.body.tags,
   };
 
   posts.push(newPost);
