@@ -58,7 +58,7 @@ function store(req, res) {
   };
 
   posts.push(newPost);
-  console.log(posts);
+  console.log(newPost);
 
   res.status(201);
   res.json(newPost);
@@ -72,8 +72,25 @@ function modify(req, res) {
 
 //update
 function update(req, res) {
-  const slug = req.params.slug;
-  res.send(`Modifica il post con slug ${slug}`);
+  const id = parseInt(req.params.id);
+
+  const post = posts.find((post) => post.id === id);
+
+  if (!pizza) {
+    res.status(404);
+
+    return res.json({
+      error: "Post not found",
+      message: "Non è stato trovato alcun post con l'id specificato",
+    });
+  }
+
+  post.title = req.body.title;
+  post.slug = req.body.slug;
+  post.content = req.body.content;
+  post.image = req.body.image;
+  post.tags = req.body.tags;
+  res.send(`Modifica il post con id: ${id}`);
 }
 
 //destroy
