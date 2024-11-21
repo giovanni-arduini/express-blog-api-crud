@@ -47,6 +47,23 @@ function show(req, res) {
 function store(req, res) {
   const newId = posts[posts.length - 1].id + 1;
   console.log(newId);
+  console.log(req.body.slug);
+
+  if (
+    !req.body.title ||
+    !req.body.slug ||
+    !req.body.content ||
+    !req.body.image ||
+    !req.body.tags
+  ) {
+    res.status(404);
+    result = {
+      error: "Invalid insert",
+      mesasge: "Compila correttamente i campi del post",
+    };
+    res.json(result);
+    return;
+  }
 
   const newPost = {
     id: newId,
