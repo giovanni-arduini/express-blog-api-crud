@@ -133,9 +133,10 @@ function update(req, res) {
 
 //destroy
 function destroy(req, res) {
-  const slug = req.params.slug;
+  const id = parseInt(req.params.id);
 
-  const postIndex = posts.findIndex((posts) => posts.slug === slug);
+  const postIndex = posts.findIndex((post) => post.id === id);
+  console.log(postIndex);
 
   if (postIndex === -1) {
     res.status(404);
@@ -151,7 +152,7 @@ function destroy(req, res) {
   posts.splice(postIndex, 1);
 
   console.log(posts);
-  console.log(`Elimina il post con slug ${slug}`);
+  console.log(`Elimina il post con id ${id}`);
   res.sendStatus(204);
 }
 
