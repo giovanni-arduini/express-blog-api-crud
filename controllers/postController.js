@@ -76,7 +76,7 @@ function update(req, res) {
 
   const post = posts.find((post) => post.id === id);
 
-  if (!pizza) {
+  if (!post) {
     res.status(404);
 
     return res.json({
@@ -91,6 +91,7 @@ function update(req, res) {
   post.image = req.body.image;
   post.tags = req.body.tags;
   res.send(`Modifica il post con id: ${id}`);
+  console.log(posts);
 }
 
 //destroy
