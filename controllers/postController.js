@@ -4,16 +4,15 @@ const posts = require("../data/posts.js");
 
 //index
 function index(req, res) {
-  //   const tag = req.query.tags;
+  const tag = req.query.tags;
   let taggedPosts = posts;
 
-  if (req.query.tags) {
-    console.log(`Ecco la lista dei post con il tag: ${req.query.tags}`);
-    const taggedPosts = posts.filter((post) => {
-      post.tags.includes(req.query.tags);
+  if (tag) {
+    console.log(`Ecco la lista dei post con il tag: ${tag}`);
+    taggedPosts = posts.filter((post) => {
+      post.tags.includes(tag);
     });
     console.log(taggedPosts);
-    return res.json(taggedPosts);
   }
 
   res.json(taggedPosts);
@@ -21,17 +20,23 @@ function index(req, res) {
 
 //show
 function show(req, res) {
-  const slug = req.params.slug;
-  let result = posts;
+  const identifier = req.params.identifier;
+  let result;
 
-  console.log(`Ecco il post con slug ${slug}`);
-  result = posts.find((p) => p.slug === slug);
+  console.log(`Ecco il post con identificativo ${identifier}`);
 
-  if (!posts) {
+  if (!isNaN(identifier)) {
+    identifier = parseInt(identifier);
+    result = posts.find((post) => post.id === identifier);
+  } else {
+    result = posts.find((post) => post.slug === identifier);
+  }
+
+  if (!result) {
     res.status(404);
     result = {
-      error: "Post not found",
-      message: "Il post non è stato trovato",
+      error: "No post found",
+      mesasge: "Nessun post trovato!",
     };
   }
 
@@ -40,7 +45,22 @@ function show(req, res) {
 
 //store
 function store(req, res) {
-  res.send("Crea un nuovo post!");
+  const newId = posts[posts.lenght - 1].id + 1;
+
+  const newPost = {
+    id: newId,
+    title,
+    slug,
+    content,
+    image,
+    tags,
+  };
+
+  posts.push(newPost);
+  console.log(posts);
+
+  res.status(201);
+  res.json(newPost);
 }
 
 //modify
