@@ -5,6 +5,8 @@ const postsRouter = require("./router/posts");
 
 app.use(express.static("public"));
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   console.log("root");
   res.send("Ciao mondo!");
