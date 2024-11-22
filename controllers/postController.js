@@ -27,7 +27,7 @@ function show(identifier) {
   return (req, res) => {
     // const identifier = param === 'id' ? parseInt(req.params.id) : req.params.slug;
     console.log(identifier);
-    let result;
+    let post;
 
     console.log(`Ecco i post con identificativo ${identifier}`);
 
@@ -39,11 +39,11 @@ function show(identifier) {
     //   result = posts.filter((post) => post.slug.includes(`${identifier}`));
     // }
 
-    result = posts.find((post) => post[identifier] === req.params[identifier]);
+    post = posts.find((post) => post[identifier] === req.params[identifier]);
 
-    if (!result) {
+    if (!post) {
       res.status(404);
-      result = {
+      post = {
         error: "No post found",
         mesasge: "Nessun post trovato!",
       };
@@ -145,10 +145,10 @@ function update(req, res) {
 function destroy(req, res) {
   const id = parseInt(req.params.id);
 
-  const postIndex = posts.findIndex((post) => post.id === id);
-  console.log(postIndex);
+  const post = posts.findIndex((post) => post.id === id);
+  console.log(post);
 
-  if (postIndex === -1) {
+  if (!post) {
     res.status(404);
     result = {
       error: "Post not found",
@@ -159,7 +159,7 @@ function destroy(req, res) {
     return;
   }
 
-  posts.splice(postIndex, 1);
+  posts.splice(post, 1);
 
   console.log(posts);
   console.log(`Elimina il post con id ${id}`);
