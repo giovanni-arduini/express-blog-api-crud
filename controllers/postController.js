@@ -12,37 +12,45 @@ function index(req, res) {
   if (tag) {
     console.log(`Ecco la lista dei post con il tag: ${tag}`);
 
-    const taggedPosts = posts.filter((post) => post.tags.includes(tag));
-    res.json(taggedPosts);
+    taggedPosts = posts.filter((post) => post.tags.includes(tag));
     console.log(taggedPosts);
-  } else res.json(taggedPosts);
+  }
+
+  res.json({
+    posts: taggedPosts,
+    count: taggedPosts.length,
+  });
 }
 
 //show
-function show(req, res) {
-  const identifier = req.params.identifier;
-  console.log(identifier);
-  let result;
+function show(identifier) {
+  return (req, res) => {
+    // const identifier = param === 'id' ? parseInt(req.params.id) : req.params.slug;
+    console.log(identifier);
+    let result;
 
-  console.log(`Ecco i post con identificativo ${identifier}`);
+    console.log(`Ecco i post con identificativo ${identifier}`);
 
-  if (!isNaN(identifier)) {
-    let postIndex;
-    postIndex = parseInt(identifier);
-    result = posts.find((post) => post.id === postIndex);
-  } else {
-    result = posts.filter((post) => post.slug.includes(`${identifier}`));
-  }
+    // if (!isNaN(identifier)) {
+    //   let postIndex;
+    //   postIndex = parseInt(identifier);
+    //   result = posts.find((post) => post.id === postIndex);
+    // } else {
+    //   result = posts.filter((post) => post.slug.includes(`${identifier}`));
+    // }
 
-  if (!result) {
-    res.status(404);
-    result = {
-      error: "No post found",
-      mesasge: "Nessun post trovato!",
-    };
-  }
+    result = posts.find((post) => post[identifier] === req.params[identifier]);
 
-  res.json(result);
+    if (!result) {
+      res.status(404);
+      result = {
+        error: "No post found",
+        mesasge: "Nessun post trovato!",
+      };
+    }
+
+    res.json(result);
+  };
 }
 
 //store
