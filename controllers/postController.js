@@ -1,4 +1,5 @@
 const posts = require("../data/posts.js");
+const notFound = require("../middlewares/notFound.js");
 
 // Functions
 
@@ -29,27 +30,19 @@ function show(identifier) {
     console.log(identifier);
     let post;
 
-    console.log(`Ecco i post con identificativo ${identifier}`);
+    // console.log(`Ecco i post con identificativo ${identifier}`);
 
-    // if (!isNaN(identifier)) {
-    //   let postIndex;
-    //   postIndex = parseInt(identifier);
-    //   result = posts.find((post) => post.id === postIndex);
-    // } else {
-    //   result = posts.filter((post) => post.slug.includes(`${identifier}`));
-    // }
+    if (!isNaN(identifier)) {
+      let postIndex;
+      postIndex = parseInt(identifier);
+      post = posts.find((post) => post.id === postIndex);
+    } else {
+      post = posts.filter((post) => post.slug.includes(`${identifier}`));
+    }
 
     post = posts.find((post) => post[identifier] === req.params[identifier]);
 
-    if (!post) {
-      res.status(404);
-      post = {
-        error: "No post found",
-        mesasge: "Nessun post trovato!",
-      };
-    }
-
-    res.json(result);
+    res.json(post);
   };
 }
 

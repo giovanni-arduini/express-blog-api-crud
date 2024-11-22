@@ -1,11 +1,8 @@
-function notFound(req, res) {
-  const post = posts.find((post) => post.id === id);
-  if (!post) {
-    res.status(404).json({
-      error: "not found",
-      message: "Post non trovato",
-    });
-  }
+function notFound(req, res, next) {
+  res.status(404).json({
+    error: "not found",
+    message: "Pagina non trovata",
+  });
 }
 
 module.exports = notFound;
