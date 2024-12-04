@@ -24,10 +24,22 @@ function index(req, res) {
 }
 
 //show
+
+function show(identifier) {
+  return (req, res) => {
+    const post = posts.find(
+      (post) => post[identifier] === req.params[identifier]
+    );
+    res.json(post);
+  };
+}
+
+/*
 function show(req, res) {
   console.log(req.post);
   // res.json(req.post);
 }
+*/
 
 //OLD SHOW FUNCTION
 // function show(identifier) {
