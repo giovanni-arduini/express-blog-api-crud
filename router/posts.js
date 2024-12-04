@@ -3,25 +3,25 @@ const router = express.Router();
 const posts = require("../data/posts.js");
 const postController = require("../controllers/postController.js");
 
-router.param("id", (req, res, next, id) => {
-  console.log("param id:", id);
+// router.param("id", (req, res, next, id) => {
+//   console.log("param id:", id);
 
-  req.params.id === parseInt(id);
+//   req.params.id === parseInt(id);
 
-  const post = posts.find((post) => post.id === req.params.id);
+//   const post = posts.find((post) => post.id === req.params.id);
 
-  if (post) {
-    req.post = post;
-    next();
-  } else {
-    res.status(404);
-    res.json({
-      from: "middleware",
-      error: "not found",
-      message: "Pagina non trovata",
-    });
-  }
-});
+//   if (post) {
+//     req.post = post;
+//     next();
+//   } else {
+//     res.status(404);
+//     res.json({
+//       from: "middleware",
+//       error: "not found",
+//       message: "Pagina non trovata",
+//     });
+//   }
+// });
 
 //index
 router.get("/", postController.index);
@@ -33,10 +33,21 @@ router.get(
     req.params.id = parseInt(req.params.id);
     next();
   },
-  postController.show("id")
+  (req, res) => {
+    const post = posts.find((post) => post.id === req.params.id);
+    res.json(post);
+  }
+  // postController.show("id")
 );
 
-router.get("/:slug", postController.show("slug"));
+router.get(
+  "/:category",
+  (req, res) => {
+    const post = posts.filter((post) => post.category === req.params.category);
+    res.json(post);
+  }
+  // postController.show("category")
+);
 
 // router.get("/:id([0-9]+)", (req, res) => {
 //   res.json({
@@ -44,9 +55,9 @@ router.get("/:slug", postController.show("slug"));
 //   });
 // });
 
-// router.get("/:slug", (req, res) => {
+// router.get("/:category", (req, res) => {
 //   res.json({
-//     slug: req.params.slug,
+//     category: req.params.category,
 //   });
 // });
 

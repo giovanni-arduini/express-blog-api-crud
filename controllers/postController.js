@@ -44,7 +44,7 @@ function show(req, res) {
 //OLD SHOW FUNCTION
 // function show(identifier) {
 // (req, res) => {
-//   // const identifier = param === 'id' ? parseInt(req.params.id) : req.params.slug;
+//   // const identifier = param === 'id' ? parseInt(req.params.id) : req.params.category;
 //   console.log(identifier);
 //   let post;
 
@@ -55,7 +55,7 @@ function show(req, res) {
 //     postIndex = parseInt(identifier);
 //     post = posts.find((post) => post.id === postIndex);
 //   } else {
-//     post = posts.filter((post) => post.slug.includes(`${identifier}`));
+//     post = posts.filter((post) => post.category.includes(`${identifier}`));
 //   }
 
 //   post = posts.find((post) => post[identifier] === req.params[identifier]);
@@ -68,13 +68,13 @@ function show(req, res) {
 function store(req, res) {
   const newId = posts[posts.length - 1].id + 1;
   console.log(newId);
-  console.log(req.body.slug);
+  console.log(req.body.category);
 
   if (
     !req.body.title ||
-    !req.body.slug ||
+    !req.body.category ||
     !req.body.content ||
-    !req.body.image ||
+    // !req.body.image ||
     !req.body.tags
   ) {
     res.status(404);
@@ -89,7 +89,7 @@ function store(req, res) {
   const newPost = {
     id: newId,
     title: req.body.title,
-    slug: req.body.slug,
+    category: req.body.category,
     content: req.body.content,
     image: req.body.image,
     tags: req.body.tags,
@@ -117,10 +117,10 @@ function modify(req, res) {
     });
   }
 
-  const { title, slug, content, image, tags } = req.body;
+  const { title, category, content, image, tags } = req.body;
 
   if (title) post.title = title;
-  if (slug) post.slug = slug;
+  if (category) post.category = category;
   if (content) post.content = content;
   if (image) post.image = image;
   if (tags) post.tags = tags;
@@ -144,7 +144,7 @@ function update(req, res) {
   }
 
   post.title = req.body.title;
-  post.slug = req.body.slug;
+  post.category = req.body.category;
   post.content = req.body.content;
   post.image = req.body.image;
   post.tags = req.body.tags;
