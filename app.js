@@ -6,7 +6,11 @@ const postsRouter = require("./router/posts");
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.static("public"));
 
 app.use(express.json());
