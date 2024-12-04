@@ -24,27 +24,33 @@ function index(req, res) {
 }
 
 //show
-function show(identifier) {
-  return (req, res) => {
-    // const identifier = param === 'id' ? parseInt(req.params.id) : req.params.slug;
-    console.log(identifier);
-    let post;
-
-    // console.log(`Ecco i post con identificativo ${identifier}`);
-
-    if (!isNaN(identifier)) {
-      let postIndex;
-      postIndex = parseInt(identifier);
-      post = posts.find((post) => post.id === postIndex);
-    } else {
-      post = posts.filter((post) => post.slug.includes(`${identifier}`));
-    }
-
-    post = posts.find((post) => post[identifier] === req.params[identifier]);
-
-    res.json(post);
-  };
+function show(req, res) {
+  console.log(req.post);
+  // res.json(req.post);
 }
+
+//OLD SHOW FUNCTION
+// function show(identifier) {
+// (req, res) => {
+//   // const identifier = param === 'id' ? parseInt(req.params.id) : req.params.slug;
+//   console.log(identifier);
+//   let post;
+
+//   // console.log(`Ecco i post con identificativo ${identifier}`);
+
+//   if (!isNaN(identifier)) {
+//     let postIndex;
+//     postIndex = parseInt(identifier);
+//     post = posts.find((post) => post.id === postIndex);
+//   } else {
+//     post = posts.filter((post) => post.slug.includes(`${identifier}`));
+//   }
+
+//   post = posts.find((post) => post[identifier] === req.params[identifier]);
+
+// res.json(res.post);
+// };
+// }
 
 //store
 function store(req, res) {

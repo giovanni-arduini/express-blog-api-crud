@@ -18,6 +18,7 @@ app.get("/", (req, res) => {
 app.use("/posts", postsRouter);
 
 app.use(errorHandler);
+
 app.use(notFound);
 
 app.listen(port, () => {
